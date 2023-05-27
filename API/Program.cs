@@ -1,3 +1,6 @@
+using API.IService;
+using API.Service;
+
 namespace API
 {
     public class Program
@@ -7,6 +10,8 @@ namespace API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddTransient<IProductService, ProductService>();
+            builder.Services.AddTransient<ICacheService, CacheService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
