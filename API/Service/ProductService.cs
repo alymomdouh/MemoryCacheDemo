@@ -9,6 +9,11 @@ namespace API.Service
     {
         public string ProductApiURL = "https://dummyjson.com/products";
 
+        public async Task AddAsync(Product value)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IList<Product>> GetProducts()
         {
             using (var client = new HttpClient())
@@ -30,6 +35,16 @@ namespace API.Service
                 }
             }
             return null;
+        }
+
+        public async Task RemoveProductAsync(Product filteredData)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task UpdateProductAsync(Product product)
+        {
+            throw new NotImplementedException();
         }
     }
 }
