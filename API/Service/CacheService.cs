@@ -1,12 +1,15 @@
 ﻿using API.IService;
 using Microsoft.Extensions.Caching.Memory;
-using System.Runtime.Caching;
 
 namespace API.Service
 {
     public class CacheService : ICacheService
     {
-        ObjectCache _memoryCache = System.Runtime.Caching.MemoryCache.Default;
+        private readonly IMemoryCache _memoryCache; 
+        public CacheService(IMemoryCache memoryCache)
+        {
+            _memoryCache = memoryCache;
+        } 
         public T GetData<T>(string key)
         {
             try
@@ -19,14 +22,14 @@ namespace API.Service
                 throw;
             }
         }
-        public bool SetData<T>(string key, T value, DateTimeOffset expirationTime)
+        public bool SetData<T>(string key, T value, MemoryCacheEntryOptions cacheEntryOptions)
         {
             bool res = true;
             try
             {
                 if (!string.IsNullOrEmpty(key))
                 {
-                    _memoryCache.Set(key, value, expirationTime);
+                    _memoryCache.Set(key, value, cacheEntryOptions);
                 }
             }
             catch (Exception e)
@@ -35,20 +38,19 @@ namespace API.Service
             }
             return res;
         }
-        public object RemoveData(string key)
+        public void RemoveData(string key)
         {
             try
             {
                 if (!string.IsNullOrEmpty(key))
                 {
-                    return _memoryCache.Remove(key);
+                    _memoryCache.Remove(key);
                 }
             }
             catch (Exception e)
             {
                 throw;
             }
-            return false;
-        }
+        } 
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace API.IService
+﻿using Microsoft.Extensions.Caching.Memory;
+
+namespace API.IService
 {
     public interface ICacheService
     {
@@ -18,13 +20,13 @@
         /// <param name="value"></param>
         /// <param name="expirationTime"></param>
         /// <returns></returns>
-        bool SetData<T>(string key, T value, DateTimeOffset expirationTime);
+        bool SetData<T>(string key, T value, MemoryCacheEntryOptions cacheEntryOptions);
 
         /// <summary>
         /// Remove Data
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        object RemoveData(string key);
+        void RemoveData(string key);
     }
 }
